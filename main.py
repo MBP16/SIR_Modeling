@@ -75,7 +75,6 @@ if __name__ == '__main__':
         S.append(s) #S 추가
         I.append(i) #I 추가
         R.append(r) #R 추가
-        print(r)
         if end_Time:
             if t[-1] == end_Time: #끝나는 시간이 정해져 있다면
                 break #종료
