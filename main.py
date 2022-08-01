@@ -28,24 +28,24 @@ dRdt_list = ["None"]
 
 # 변화량 계산 함수들
 
-def dSdt(S: Union[float, Decimal], I: Union[float, Decimal]) -> Union[float, Decimal]:
-    dSdt_list.append(-λ * S * I)
-    return -λ * S * I
-def dIdt(S: Union[float, Decimal], I: Union[float, Decimal]) -> Union[float, Decimal]:
-    dIdt_list.append(λ * S * I - γ * I)
-    return λ * S * I - γ * I
-def dRdt(I: Union[float, Decimal]) -> Union[float, Decimal]:
-    dRdt_list.append(γ * I)
-    return γ * I
+def dSdt(s: Union[float, Decimal], i: Union[float, Decimal]) -> Union[float, Decimal]:
+    dSdt_list.append(-λ * s * i)
+    return -λ * s * i
+def dIdt(s: Union[float, Decimal], i: Union[float, Decimal]) -> Union[float, Decimal]:
+    dIdt_list.append(λ * s * i - γ * i)
+    return λ * s * i - γ * i
+def dRdt(i: Union[float, Decimal]) -> Union[float, Decimal]:
+    dRdt_list.append(γ * i)
+    return γ * i
 
 # S, I, R값 계산 함수들
 
-def S_calc(S: Union[float, Decimal], I: Union[float, Decimal]) -> Union[float, Decimal]:
-    return S + dSdt(S, I) * DT
-def I_calc(S: Union[float, Decimal], I: Union[float, Decimal]) -> Union[float, Decimal]:
-    return I + dIdt(S, I) * DT
-def R_calc(I: Union[float, Decimal], R: Union[float, Decimal]) -> Union[float, Decimal]:
-    return R + dRdt(I) * DT
+def S_calc(s: Union[float, Decimal], i: Union[float, Decimal]) -> Union[float, Decimal]:
+    return s + dSdt(s, i) * DT
+def I_calc(s: Union[float, Decimal], i: Union[float, Decimal]) -> Union[float, Decimal]:
+    return i + dIdt(s, i) * DT
+def R_calc(i: Union[float, Decimal], r: Union[float, Decimal]) -> Union[float, Decimal]:
+    return r + dRdt(i) * DT
 
 #변수들 고정소수화 하는 함수
 
@@ -94,9 +94,9 @@ if __name__ == '__main__':
     #S, I, R값 수치적분
     while True:
         t.append(t[-1] + DT) #시간 증가
-        s_output = S_calc(S=s[-1], I=i[-1]) #S 계산
-        i_output = I_calc(S=s[-1], I=i[-1]) #I 계산
-        r_output = R_calc(I=i[-1], R=r[-1]) #R 계산
+        s_output = S_calc(s=s[-1], i=i[-1]) #S 계산
+        i_output = I_calc(s=s[-1], i=i[-1]) #I 계산
+        r_output = R_calc(i=i[-1], r=r[-1]) #R 계산
         s.append(s_output) #S 추가
         i.append(i_output) #I 추가
         r.append(r_output) #R 추가
