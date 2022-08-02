@@ -1,5 +1,4 @@
 from decimal import Decimal
-from typing import Union
 
 
 # constants and initial values
@@ -119,7 +118,7 @@ class SIR_MODELING:
         self.γ = self.Decimalize(self.γ)
 
     @staticmethod
-    def dSdt(s: Union[float, Decimal], i: Union[float, Decimal]) -> Union[float, Decimal]:
+    def dSdt(s: float | Decimal, i: float | Decimal) -> float | Decimal:
         """
         calculate dSdt(delta Susceptible / delta time)
 
@@ -129,7 +128,7 @@ class SIR_MODELING:
         """
         return -λ * s * i
     @staticmethod
-    def dIdt(s: Union[float, Decimal], i: Union[float, Decimal]) -> Union[float, Decimal]:
+    def dIdt(s: float | Decimal, i: float | Decimal) -> float | Decimal:
         """
         calculate dIdt(delta Infected / delta time)
 
@@ -139,7 +138,7 @@ class SIR_MODELING:
         """
         return λ * s * i - γ * i
     @staticmethod
-    def dRdt(i: Union[float, Decimal]) -> Union[float, Decimal]:
+    def dRdt(i: float | Decimal) -> float | Decimal:
         """
         calculate dRdt(delta Recovery / delta time)
 
@@ -149,7 +148,7 @@ class SIR_MODELING:
         return γ * i
 
     @classmethod
-    def S_calc(cls, s: Union[float, Decimal], i: Union[float, Decimal], dSdt_return=False) -> Union[float, Decimal]:
+    def S_calc(cls, s: float | Decimal, i: float | Decimal, dSdt_return=False) -> float | Decimal:
         """
         calculate next Susceptible
 
@@ -163,7 +162,7 @@ class SIR_MODELING:
         else:
             return s + cls.dSdt(s, i) * DT
     @classmethod
-    def I_calc(cls, s: Union[float, Decimal], i: Union[float, Decimal], dIdt_return=False) -> Union[float, Decimal]:
+    def I_calc(cls, s: float | Decimal, i: float | Decimal, dIdt_return=False) -> float | Decimal:
         """
         calculate next Infected
 
@@ -177,7 +176,7 @@ class SIR_MODELING:
         else:
             return i + cls.dIdt(s, i) * DT
     @classmethod
-    def R_calc(cls, i: Union[float, Decimal], r: Union[float, Decimal], dRdt_return=False) -> Union[float, Decimal]:
+    def R_calc(cls, i: float | Decimal, r: float | Decimal, dRdt_return=False) -> float | Decimal:
         """
         calculate next Recovery
 
@@ -192,7 +191,7 @@ class SIR_MODELING:
             return r + cls.dRdt(i) * DT
 
     @staticmethod
-    def Decimalize(input: Union[list, int, float]) -> Union[list, Decimal]:
+    def Decimalize(input: list | int | float) -> list | Decimal:
         """
         make input(number, list) into decimal.Decimal object
 
