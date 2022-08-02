@@ -1,1 +1,1 @@
-# SEIR_Modeling
+# SIR_Modeling
