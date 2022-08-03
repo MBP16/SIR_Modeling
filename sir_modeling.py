@@ -51,9 +51,9 @@ class SIR_MODELING:
             self.t.append(self.t[-1] + self.DT)
 
             #get next S, I, R values
-            self.s_output, self.dsdt_output = self.S_calc(s=self.s[-1], i=self.i[-1], dSdt_return=True)
-            self.i_output, self.didt_output = self.I_calc(s=self.s[-1], i=self.i[-1], dIdt_return=True)
-            self.r_output, self.drdt_output = self.R_calc(i=self.i[-1], r=self.r[-1], dRdt_return=True)
+            self.s_output, self.dsdt_output = self.S_calc(λ=self.λ, s=self.s[-1], i=self.i[-1], DT=self.DT, dSdt_return=True)
+            self.i_output, self.didt_output = self.I_calc(λ=self.λ, γ=self.γ, s=self.s[-1], i=self.i[-1], DT=self.DT, dIdt_return=True)
+            self.r_output, self.drdt_output = self.R_calc(i=self.i[-1], γ=self.γ, r=self.r[-1], DT=self.DT, dRdt_return=True)
 
             #append S, I, R, dSdt, dIdt, and dRdt values to the list
             self.s.append(self.s_output)
@@ -118,77 +118,88 @@ class SIR_MODELING:
         self.γ = self.Decimalize(self.γ)
 
     @staticmethod
-    def dSdt(s: float | Decimal, i: float | Decimal) -> float | Decimal:
+    def dSdt(λ: float | Decimal, s: float | Decimal, i: float | Decimal) -> float | Decimal:
         """
         calculate dSdt(delta Susceptible / delta time)
 
+        :param λ: Infection rate
         :param s: previous Susceptible
         :param i: previous Infected
         :return: -λ(Infection rate) * s * i
         """
         return -λ * s * i
     @staticmethod
-    def dIdt(s: float | Decimal, i: float | Decimal) -> float | Decimal:
+    def dIdt(λ: float | Decimal, γ: float | Decimal, s: float | Decimal, i: float | Decimal) -> float | Decimal:
         """
         calculate dIdt(delta Infected / delta time)
 
+        :param λ: Infection rate
+        :param γ: Recovery rate
         :param s: previous Susceptible
         :param i: previous Infected
         :return: -λ(Infection rate) * s * i - γ(Recovery rate) * i
         """
         return λ * s * i - γ * i
     @staticmethod
-    def dRdt(i: float | Decimal) -> float | Decimal:
+    def dRdt(γ: float | Decimal, i: float | Decimal) -> float | Decimal:
         """
         calculate dRdt(delta Recovery / delta time)
 
+        :param γ: Recovery rate
         :param i: previous Infected
         :return: γ(Recover rate) * i
         """
         return γ * i
 
     @classmethod
-    def S_calc(cls, s: float | Decimal, i: float | Decimal, dSdt_return=False) -> float | Decimal:
+    def S_calc(cls, λ: float | Decimal, s: float | Decimal, i: float | Decimal, DT: float | Decimal, dSdt_return=False) -> float | Decimal:
         """
         calculate next Susceptible
 
+        :param λ: Infection rate
         :param s: previous Susceptible
         :param i: previous Infected
+        :param DT: time step
         :param dSdt_return: If true, it returns current dSdt value
         :return: next Susceptible, current dSdt value(If dSdt_return = True)
         """
         if dSdt_return:
-            return s + cls.dSdt(s, i) * DT, cls.dSdt(s, i)
+            return s + cls.dSdt(λ, s, i) * DT, cls.dSdt(λ, s, i)
         else:
-            return s + cls.dSdt(s, i) * DT
+            return s + cls.dSdt(λ, s, i) * DT
     @classmethod
-    def I_calc(cls, s: float | Decimal, i: float | Decimal, dIdt_return=False) -> float | Decimal:
+    def I_calc(cls, λ: float | Decimal, γ: float | Decimal, s: float | Decimal, i: float | Decimal, DT: float | Decimal, dIdt_return=False) -> float | Decimal:
         """
         calculate next Infected
 
+        :param λ: Infection rate
+        :param γ: Recovery rate
         :param s: previous Susceptible
         :param i: previous Infected
+        :param DT: time step
         :param dIdt_return: If true, it returns current dIdt value
         :return: next Infected, current dIdt value(If dIdt_return = True)
         """
         if dIdt_return:
-            return i + cls.dIdt(s, i) * DT, cls.dIdt(s, i)
+            return i + cls.dIdt(λ, γ, s, i) * DT, cls.dIdt(λ, γ, s, i)
         else:
-            return i + cls.dIdt(s, i) * DT
+            return i + cls.dIdt(λ, γ, s, i) * DT
     @classmethod
-    def R_calc(cls, i: float | Decimal, r: float | Decimal, dRdt_return=False) -> float | Decimal:
+    def R_calc(cls, γ: float | Decimal, i: float | Decimal, r: float | Decimal, DT: float | Decimal, dRdt_return=False) -> float | Decimal:
         """
         calculate next Recovery
 
+        :param γ: Recovery rate
         :param i: previous Infected
         :param r: previous Recovery
+        :param DT: time step
         :param dRdt_return: If true, it returns current dRdt value
         :return: next Recovery, current dRdt value(If dRdt_return = True)
         """
         if dRdt_return:
-            return r + cls.dRdt(i) * DT, cls.dRdt(i)
+            return r + cls.dRdt(γ, i) * DT, cls.dRdt(γ, i)
         else:
-            return r + cls.dRdt(i) * DT
+            return r + cls.dRdt(γ, i) * DT
 
     @staticmethod
     def Decimalize(input: list | int | float) -> list | Decimal:
