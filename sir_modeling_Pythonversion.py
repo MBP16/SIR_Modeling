@@ -3,7 +3,7 @@ from decimal import Decimal
 
 # constants and initial values
 FLOAT_TYPE = False
-DT = 0.1
+DT = 0.0001
 λ = 0.03
 γ = 0.5
 END_TIME = 20

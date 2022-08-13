@@ -3,12 +3,10 @@ import ctypes
 
 
 #c++_file_import
-modeling = ctypes.CDLL('cmake-build-debug/libmodeling.so')
-modeling_cpp = modeling.modeling
-modeling_cpp.restype = ctypes.py_object
+import modeling
 
 # constants and initial values
-DT = 0.1
+DT = 0.0001
 λ = 0.03
 γ = 0.5
 END_TIME = 0
@@ -45,7 +43,14 @@ class SIR_MODELING:
         """
         make SIR model with euler`s method
         """
-        modeling_cpp(ctypes.c_float(self.DT), ctypes.c_float(self.λ), ctypes.c_float(self.γ), ctypes.c_float(self.T), ctypes.c_float(self.S), ctypes.c_float(self.I), ctypes.c_float(self.R), ctypes.c_float(self.END_TIME))
+        result = modeling.modeling(self.DT, self.λ, self.γ, self.T, self.S, self.I, self.R, self.END_TIME)
+        self.t = result[0]
+        self.s = result[1]
+        self.i = result[2]
+        self.r = result[3]
+        self.dSdt_list = result[4]
+        self.dIdt_list = result[5]
+        self.dRdt_list = result[6]
 
     def render_graph(self):
         """
@@ -82,5 +87,5 @@ class SIR_MODELING:
 if __name__ == '__main__':
     model = SIR_MODELING(DT=DT, λ=λ, γ=γ, S=S, I=I, R=R, T=T, END_TIME=END_TIME)
     model.modeling()
-    # model.render_graph()
-    # model.save_data()
+    model.render_graph()
+    model.save_data()
