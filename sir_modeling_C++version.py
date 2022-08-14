@@ -1,12 +1,8 @@
-from decimal import Decimal
-import ctypes
-
-
 #c++_file_import
 import modeling
 
 # constants and initial values
-DT = 0.0001
+DT = 0.01
 λ = 0.03
 γ = 0.5
 END_TIME = 0
@@ -70,11 +66,11 @@ class SIR_MODELING:
 
     def save_data(self):
         """
-        save datas into csv file named "data.csv"
+        save datas into csv file named "datacpp.csv"
         """
         import csv
 
-        self.f = open('data.csv', 'w', encoding='utf-8', newline='')
+        self.f = open('datacpp.csv', 'w', encoding='utf-8', newline='')
         self.wr = csv.writer(self.f)
         self.wr.writerow(['Time', 'S', 'I', 'R', 'dSdt', 'dIdt', 'dRdt'])
         for i in range(len(self.t)):

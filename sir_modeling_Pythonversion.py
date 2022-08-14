@@ -3,10 +3,10 @@ from decimal import Decimal
 
 # constants and initial values
 FLOAT_TYPE = False
-DT = 0.0001
+DT = 0.01
 λ = 0.03
 γ = 0.5
-END_TIME = 20
+END_TIME = 0
 T = 0
 S = 299
 I = 1
@@ -68,10 +68,10 @@ class SIR_MODELING:
                 if self.t[-1] >= self.END_TIME:
                     break
             if self.FLOAT_TYPE:
-                if self.r[-1] >= self.s[0] + self.i[0] + self.r[0] - Decimal(0.00001):
+                if self.r[-1] >= self.s[0] + self.i[0] + self.r[0] - Decimal(0.0001):
                     break
             else:
-                if self.r[-1] >= self.s[0] + self.i[0] + self.r[0] - 0.00001:
+                if self.r[-1] >= self.s[0] + self.i[0] + self.r[0] - 0.0001:
                     break
 
     def render_graph(self):

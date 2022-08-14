@@ -1,5 +1,6 @@
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
+#include "cfloat"
 
 
 using namespace std;
@@ -52,8 +53,12 @@ PyObject* modeling(PyObject* self, PyObject* args) {
             }
         }
         if (PyFloat_AsDouble(PyList_GetItem(r_list, PyList_Size(r_list) - 1)) >=
-                PyFloat_AsDouble(PyList_GetItem(s_list, 0)) + PyFloat_AsDouble(PyList_GetItem(i_list, 0)) +
-                        PyFloat_AsDouble(PyList_GetItem(r_list, 0)) - 1) {
+        PyFloat_AsDouble(PyList_GetItem(s_list, 0)) + PyFloat_AsDouble(PyList_GetItem(i_list, 0)) +
+        PyFloat_AsDouble(PyList_GetItem(r_list, 0)) - 0.1f)  {
+            break;
+        }
+        if (PyFloat_AsDouble(PyList_GetItem(r_list, PyList_Size(r_list) - 1)) -
+        PyFloat_AsDouble(PyList_GetItem(r_list, PyList_Size(r_list) - 2)) < FLT_EPSILON) {
             break;
         }
     }
