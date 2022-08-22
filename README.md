@@ -33,16 +33,17 @@
 - γ: Recovery Rate
 - S: Initial Susceptible number
 
-
 ###### Optional Values
 
 - FLOAT_TYPE: Select fixed/floating points, True: fixed points/False: floating points(False is default)
+- T: Starting time(0 is default)
 - I: Initial Infected(1 is default)
 - R: Initial Recovery(0 is default)
 - END_TIME: Use when you want to End modeling in specific time.(0 is default, it means no end until S0+I0+R0 = LastR)
 
 ### Notices
 
+- γ and λ value in config is allowed to use in expression with string type.(ex. "1/200")
 - Without END_TIME, the program doesn`t end especially when DT value is low.(Python only, c++ version has an exit method)
 - C++ version is faster than Python version when running with large data size.
 - But C++ version needs buiding in each computer newly and it`s more complicated to use.
