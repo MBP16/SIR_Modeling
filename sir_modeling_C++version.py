@@ -48,29 +48,48 @@ class SIR_MODELING:
         self.dIdt_list = result[5]
         self.dRdt_list = result[6]
 
-    def render_graph(self):
+    def render_graph(self, title: str="SIR Model Graph",
+                     S_label: str="Susceptible", I_label: str="Infected", R_label: str="Recovered",
+                     x_label: str="Time", y_label: str="Number of people",
+                     export_to_image:bool = False, file_name: str="SIR_MODEL_GRAPH.png", file_dpi: int=300):
         """
         render graph with matplotlib.pyplot
+
+        :param title: title of graph
+        :param S_label: label of susceptible
+        :param I_label: label of infected
+        :param R_label: label of recovered
+        :param x_label: label of x axis
+        :param y_label: label of y axis
+        :param export_to_image: if True, export graph to image file
+        :param file_name: file name to export graph
+        :param file_dpi: dpi of image file
         """
         import matplotlib.pyplot as plt
 
         plt.figure(dpi=400)
-        plt.title("SIR Model Graph")
-        plt.plot(self.t, self.s, label='Susceptible')
-        plt.plot(self.t, self.i, label='Infected')
-        plt.plot(self.t, self.r, label='Recover')
+        plt.title(title)
+        plt.plot(self.t, self.s, label=S_label)
+        plt.plot(self.t, self.i, label=I_label)
+        plt.plot(self.t, self.r, label=R_label)
+        plt.xlabel(x_label)
+        plt.ylabel(y_label)
+        if export_to_image:
+            plt.savefig(file_name, dpi=file_dpi)
         plt.legend()
         plt.show()
 
         del plt
 
-    def save_data(self):
+    def save_data(self, file_name: str="datacpp.csv"):
         """
-        save datas into csv file named "datacpp.csv"
+        save datas into csv file
+
+        :param file_name: file name to save data
         """
         import csv
 
-        self.f = open('datacpp.csv', 'w', encoding='utf-8', newline='')
+        self.f = open(file_name, 'w', encoding='utf-8', newline='')
         self.wr = csv.writer(self.f)
         self.wr.writerow(['Time', 'S', 'I', 'R', 'dSdt', 'dIdt', 'dRdt'])
         for i in range(len(self.t)):

@@ -131,6 +131,8 @@ dmypy.json
 #output csv
 *.csv
 
+#outpur image
+*.png
 
 #c related files
 CMakeLists.txt
