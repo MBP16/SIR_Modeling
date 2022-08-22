@@ -95,7 +95,7 @@ if __name__ == '__main__':
     with open(file='config.json', mode='r', encoding='utf-8') as f:
         config = json.load(f)
     del json
-    FLOAT_TYPE, DT, λ, γ, END_TIME, T, S, I, R = list(config.values())
+    DT, λ, γ, END_TIME, T, S, I, R = list(config.values())[1:]
 
     # convert values to float if they are expression
     if type(λ) == str:
