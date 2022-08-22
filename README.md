@@ -24,6 +24,20 @@
     ```
 - Finally, run the file [C++version.py](sir_modeling_C++version.py) then you will get output data into [file](datacpp.csv) and get a graph drawn by matplotlib.pyplot
 
+#### - Use as a module
+
+- First, import file with the following code(Python or c++ version)
+  ```python
+  from sir_modeling_Pythonversion import SIR_MODELING
+  from sir_modeling_C++version import SIR_MODELING
+  ```
+- If you are using c++ version, you have to run following command.
+  ```shell
+  python setup.py install
+  ```
+- If model import is completed, use SIR_MODELING class to make model object and use functions which you want
+
+
 #### - Config changing help
 
 ###### Essential Values
