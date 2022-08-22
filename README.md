@@ -12,15 +12,17 @@
 
 #### - Python version
 
-- Just run the file [Pythonversion.py](sir_modeling_Pythonversion.py) then you will get output data into [file](data.csv) and get a graph drawn by matplotlib.pyplot
+- First, change the values in [config file](config.json) to your own
+- Then, run the file [Pythonversion.py](sir_modeling_Pythonversion.py) then you will get output data into [file](data.csv) and get a graph drawn by matplotlib.pyplot
 
 #### - C++ version
 
-- First, run the following command
+- First, change the values in [config file](config.json) to your own
+- Next, run the following command
     ```shell
     python setup.py install
     ```
-- Then run the file [C++version.py](sir_modeling_C++version.py) then you will get output data into [file](datacpp.csv) and get a graph drawn by matplotlib.pyplot
+- Finally, run the file [C++version.py](sir_modeling_C++version.py) then you will get output data into [file](datacpp.csv) and get a graph drawn by matplotlib.pyplot
 
 ### Notices
 

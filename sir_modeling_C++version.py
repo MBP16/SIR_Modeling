@@ -1,16 +1,6 @@
 #c++_file_import
 import modeling
 
-# constants and initial values
-DT = 0.01
-λ = 0.03
-γ = 0.5
-END_TIME = 0
-T = 0
-S = 299
-I = 1
-R = 0
-
 
 class SIR_MODELING:
     def __init__(self, DT: float, λ: float, γ: float, S: int, I: int=1, R: int=0, T: float=0, END_TIME: float=0):
@@ -100,6 +90,21 @@ class SIR_MODELING:
 
 
 if __name__ == '__main__':
+    #getting config values
+    import json
+    with open(file='config.json', mode='r', encoding='utf-8') as f:
+        config = json.load(f)
+    del json
+    FLOAT_TYPE, DT, λ, γ, END_TIME, T, S, I, R = list(config.values())
+
+    # convert values to float if they are expression
+    if type(λ) == str:
+        λ = eval(λ)
+    if type(γ) == str:
+        γ = eval(γ)
+
+
+    # run model
     model = SIR_MODELING(DT=DT, λ=λ, γ=γ, S=S, I=I, R=R, T=T, END_TIME=END_TIME)
     model.modeling()
     model.render_graph()
